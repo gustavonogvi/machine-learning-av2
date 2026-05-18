@@ -21,6 +21,7 @@ Tarefa: **classificação** da severidade dos acidentes (`SEVERITYCODE`).
 - Evitar **data leakage** — qualquer transformação que use estatísticas do conjunto inteiro deve ser feita após o split
 - Usar **pelo menos 2 modelos** de ML
 - Commits sem co-author
+- **Sem linhas de comentário no código** — explicações ficam nas células markdown do notebook
 
 ---
 
