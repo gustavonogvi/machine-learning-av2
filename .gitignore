@@ -1,6 +1,9 @@
 # PDF files
 *.pdf
 
+# Documentação interna
+CLAUDE.md
+
 # Dataset
 data/
 
