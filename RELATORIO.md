@@ -24,13 +24,22 @@ Conjunto de dados *Vehicle Collision Data in Seattle (2005–2019)*, disponível
 
 ### 2.2 Tipo do Problema
 
-Trata-se de um problema de **classificação supervisionada multiclasse**, em que o alvo `SEVERITYCODE` é um código ordinal com 4 níveis crescentes de severidade (0 a 3).
+Trata-se de um problema de **classificação supervisionada multiclasse**, em que o alvo `SEVERITYCODE` é um código ordinal com 4 níveis crescentes de severidade. O significado de cada código foi **confirmado a partir do próprio dataset**, cruzando-se o alvo com as colunas de consequência (`INJURIES`, `SERIOUSINJURIES`, `FATALITIES`):
+
+| Código | Significado | Validação (cruzamento) |
+|--------|-------------|------------------------|
+| 0 | Apenas Danos Materiais | 0% de feridos, graves ou fatais |
+| 1 | Ferimentos (leves) | 100% com feridos; 0% graves/fatais |
+| 2 | Ferimentos Graves | 100% com feridos graves; 0% fatais |
+| 3 | Fatalidade | 100% com fatalidade |
+
+Esse esquema corresponde à escala oficial de severidade do *Seattle Department of Transportation* (Danos Materiais → Ferimento → Ferimento Grave → Fatalidade).
 
 ### 2.3 Descrição das Principais Variáveis
 
 | Grupo | Variáveis | Descrição |
 |-------|-----------|-----------|
-| **Alvo** | `SEVERITYCODE` | Severidade da colisão (0 a 3, ordinal crescente) |
+| **Alvo** | `SEVERITYCODE` | Severidade da colisão: 0 (danos materiais), 1 (ferimentos), 2 (ferimentos graves), 3 (fatalidade) |
 | **Localização** | `longitude`, `latitude` | Coordenadas geográficas do acidente |
 | **Características** | `COLLISIONTYPE`, `JUNCTIONTYPE` | Tipo de colisão e tipo de cruzamento/via |
 | **Envolvidos** | `PERSONCOUNT`, `PEDCOUNT`, `PEDCYLCOUNT`, `VEHCOUNT` | Contagem de pessoas, pedestres, ciclistas e veículos |
@@ -48,12 +57,12 @@ Trata-se de um problema de **classificação supervisionada multiclasse**, em qu
 
 **Distribuição do alvo:** a análise revelou forte desbalanceamento de classes:
 
-| Classe | Proporção |
-|--------|-----------|
-| 0 | 64,33% |
-| 1 | 33,79% |
-| 2 | 1,71% |
-| 3 | 0,17% |
+| Classe | Significado | Proporção |
+|--------|-------------|-----------|
+| 0 | Danos materiais | 64,33% |
+| 1 | Ferimentos | 33,79% |
+| 2 | Ferimentos graves | 1,71% |
+| 3 | Fatalidade | 0,17% |
 
 As classes 2 e 3 somam menos de 2% dos dados. Isso define o **baseline**: prever sempre a classe majoritária (Classe 0) daria acurácia de **64,33%** — limiar que qualquer modelo deve superar. Pela criticidade das classes graves, a métrica primária adotada é o **F1-Score Macro**, que pesa igualmente todas as classes. *(Figura 1: distribuição do alvo.)*
 
