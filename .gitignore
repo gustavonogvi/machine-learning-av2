@@ -7,6 +7,16 @@ CLAUDE.md
 # Dataset
 data/
 
+# Artefatos do pré-processamento (gerados pelo 02_preprocessing.ipynb)
+X_train.pkl
+X_test.pkl
+y_train.pkl
+y_test.pkl
+X_train.csv
+X_test.csv
+y_train.csv
+y_test.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
