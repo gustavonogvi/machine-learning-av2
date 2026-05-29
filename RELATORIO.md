@@ -64,11 +64,20 @@ Esse esquema corresponde à escala oficial de severidade do *Seattle Department 
 | 2 | Ferimentos graves | 1,71% |
 | 3 | Fatalidade | 0,17% |
 
-As classes 2 e 3 somam menos de 2% dos dados. Isso define o **baseline**: prever sempre a classe majoritária (Classe 0) daria acurácia de **64,33%** — limiar que qualquer modelo deve superar. Pela criticidade das classes graves, a métrica primária adotada é o **F1-Score Macro**, que pesa igualmente todas as classes. *(Figura 1: distribuição do alvo.)*
+As classes 2 e 3 somam menos de 2% dos dados. Isso define o **baseline**: prever sempre a classe majoritária (Classe 0) daria acurácia de **64,33%** — limiar que qualquer modelo deve superar. Pela criticidade das classes graves, a métrica primária adotada é o **F1-Score Macro**, que pesa igualmente todas as classes.
 
-**Correlações e multicolinearidade:** a matriz de correlação de Pearson identificou pares de variáveis fortemente correlacionadas entre si (|r| > 0,8): `TAVG`×`TMAX` (0,969), `TAVG`×`TMIN` (0,954), `TMAX`×`TMIN` (0,875) e `AWND`×`WSF5` (0,814) — indicando redundância a ser tratada. *(Figura 2: heatmap de correlação.)*
+<img src="figuras/fig1_distribuicao_alvo.png" style="width: 380pt">
+<p class="legenda">Figura 1 — Distribuição da variável alvo SEVERITYCODE.</p>
 
-**Relevância das features:** como a correlação de Pearson é limitada para alvos multiclasse, calculou-se a **Informação Mútua** entre cada variável e o alvo. As mais informativas foram `VEHCOUNT` (0,082), `PEDCOUNT` (0,043), `longitude` (0,041) e `latitude` (0,040). As variáveis meteorológicas apresentaram informação mútua próxima de zero, indicando baixo poder preditivo isolado. *(Figura 3: ranking de Informação Mútua.)*
+**Correlações e multicolinearidade:** a matriz de correlação de Pearson identificou pares de variáveis fortemente correlacionadas entre si (|r| > 0,8): `TAVG`×`TMAX` (0,969), `TAVG`×`TMIN` (0,954), `TMAX`×`TMIN` (0,875) e `AWND`×`WSF5` (0,814) — indicando redundância a ser tratada.
+
+<img src="figuras/fig2_correlacao.png" style="width: 440pt">
+<p class="legenda">Figura 2 — Matriz de correlação de Pearson entre as variáveis numéricas.</p>
+
+**Relevância das features:** como a correlação de Pearson é limitada para alvos multiclasse, calculou-se a **Informação Mútua** entre cada variável e o alvo. As mais informativas foram `VEHCOUNT` (0,082), `PEDCOUNT` (0,043), `longitude` (0,041) e `latitude` (0,040). As variáveis meteorológicas apresentaram informação mútua próxima de zero, indicando baixo poder preditivo isolado.
+
+<img src="figuras/fig3_informacao_mutua.png" style="width: 420pt">
+<p class="legenda">Figura 3 — Ranking de Informação Mútua das features com o alvo.</p>
 
 **Valores ausentes:** identificaram-se nulos relevantes em `response_type`/`response_time` (86,55%), `SNOW`/`SNWD` (24,19%) e `WSF5` (1,21%).
 
@@ -126,7 +135,8 @@ A métrica primária é o **F1-Score Macro** (adequado ao desbalanceamento). Rep
 | Recall (Macro) | 0,5332 | 0,4778 | 1,0000 | 0,3238 |
 | F1-Score (Macro) | 0,3269 | 0,3219 | 1,0000 | 0,3239 |
 
-*(Figura 4: matrizes de confusão dos dois modelos no conjunto de teste — recomenda-se juntar os dois gráficos lado a lado.)*
+<img src="figuras/fig4_matrizes_confusao.png" style="width: 480pt">
+<p class="legenda">Figura 4 — Matrizes de confusão no conjunto de teste. O Random Forest praticamente não prevê as classes 2 e 3 (colunas zeradas), enquanto a Regressão Logística tenta classificá-las, ao custo de mais falsos positivos.</p>
 
 ### 5.3 Discussão dos Resultados
 
